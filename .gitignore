@@ -5,6 +5,8 @@
 .idea/
 *.iml
 out/
+target/
+.vscode/
 
 # Eclipse
 .classpath

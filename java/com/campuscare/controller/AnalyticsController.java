@@ -4,6 +4,7 @@ import com.campuscare.model.*;
 import com.campuscare.util.DataService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.util.*;
 import java.util.stream.Collectors;
+import javafx.scene.chart.*;
 
 public class AnalyticsController {
     @FXML private Label totalRequestsLabel;
@@ -19,14 +21,8 @@ public class AnalyticsController {
     @FXML private Label completedLabel;
     @FXML private Label avgResolutionLabel;
     @FXML private Label completionRateLabel;
-    @FXML private TableView<Map.Entry<String, Long>> categoryTable;
-    @FXML private TableColumn<Map.Entry<String, Long>, String> categoryCol;
-    @FXML private TableColumn<Map.Entry<String, Long>, String> countCol;
-    @FXML private TableColumn<Map.Entry<String, Long>, String> percentCol;
-    @FXML private TableView<Map.Entry<String, Long>> priorityTable;
-    @FXML private TableColumn<Map.Entry<String, Long>, String> priorityCol;
-    @FXML private TableColumn<Map.Entry<String, Long>, String> priorityCountCol;
-    @FXML private TableColumn<Map.Entry<String, Long>, String> priorityPercentCol;
+    @FXML private PieChart categoryChart;
+    @FXML private BarChart<String, Number> priorityChart;
     
     private DataService dataService;
     private User currentUser;
@@ -42,21 +38,7 @@ public class AnalyticsController {
     
     @FXML
     private void initialize() {
-        categoryCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getKey()));
-        countCol.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getValue())));
-        percentCol.setCellValueFactory(data -> {
-            long total = categoryTable.getItems().stream().mapToLong(Map.Entry::getValue).sum();
-            double percent = total > 0 ? (data.getValue().getValue() * 100.0 / total) : 0;
-            return new SimpleStringProperty(String.format("%.1f%%", percent));
-        });
-        
-        priorityCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getKey()));
-        priorityCountCol.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getValue())));
-        priorityPercentCol.setCellValueFactory(data -> {
-            long total = priorityTable.getItems().stream().mapToLong(Map.Entry::getValue).sum();
-            double percent = total > 0 ? (data.getValue().getValue() * 100.0 / total) : 0;
-            return new SimpleStringProperty(String.format("%.1f%%", percent));
-        });
+        // Charts are initialized in loadAnalytics
     }
     
     private void loadAnalytics() {
@@ -81,12 +63,22 @@ public class AnalyticsController {
         Map<String, Long> categoryStats = requests.stream()
             .filter(r -> r.getCategory() != null)
             .collect(Collectors.groupingBy(r -> r.getCategory().toString(), Collectors.counting()));
-        categoryTable.setItems(FXCollections.observableArrayList(categoryStats.entrySet()));
+            
+        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+        categoryStats.forEach((k, v) -> pieData.add(new PieChart.Data(k, v)));
+        categoryChart.setData(pieData);
         
         Map<String, Long> priorityStats = requests.stream()
             .filter(r -> r.getPriority() != null)
             .collect(Collectors.groupingBy(r -> r.getPriority().toString(), Collectors.counting()));
-        priorityTable.setItems(FXCollections.observableArrayList(priorityStats.entrySet()));
+            
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Requests");
+        // Sort priorities logically if possible, or just add them
+        priorityStats.forEach((k, v) -> series.getData().add(new XYChart.Data<>(k, v)));
+        
+        priorityChart.getData().clear();
+        priorityChart.getData().add(series);
     }
     
     @FXML

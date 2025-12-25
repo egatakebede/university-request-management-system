@@ -102,7 +102,14 @@ public class ServiceRequest implements Serializable {
     
     public void addComment(String comment) {
         if (comments == null) comments = new java.util.ArrayList<>();
-        comments.add(java.time.LocalDateTime.now() + ": " + comment);
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+        comments.add(java.time.LocalDateTime.now().format(formatter) + ": " + comment);
+    }
+    
+    public void clearComments() {
+        if (comments != null) {
+            comments.clear();
+        }
     }
     
     public long getResolutionTimeHours() {

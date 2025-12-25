@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.campuscare.controller.ChatController"
+      spacing="10" styleClass="chat-container" prefWidth="450" prefHeight="550">
+    
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+    
+    <HBox alignment="CENTER_LEFT">
+        <Label fx:id="headerLabel" text="Chat" styleClass="section-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Clear Chat" onAction="#handleClear" styleClass="secondary-button" style="-fx-font-size: 11px; -fx-padding: 4 8;"/>
+    </HBox>
+    
+    <ListView fx:id="chatListView" VBox.vgrow="ALWAYS" styleClass="chat-list"/>
+    
+    <Label fx:id="typingLabel" text="Someone is typing..." visible="false" managed="false" style="-fx-text-fill: #888; -fx-font-style: italic; -fx-font-size: 12px;"/>
+    
+    <HBox spacing="10">
+        <TextField fx:id="messageField" promptText="Type a message..." HBox.hgrow="ALWAYS" onAction="#handleSend"/>
+        <Button text="Send" onAction="#handleSend" styleClass="primary-button"/>
+    </HBox>
+</VBox>

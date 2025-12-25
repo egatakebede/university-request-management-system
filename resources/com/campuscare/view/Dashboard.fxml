@@ -6,6 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.campuscare.controller.DashboardController"
+            fx:id="dashboardRoot"
             styleClass="dashboard-container"
             prefWidth="1200" prefHeight="700">
     
@@ -15,10 +16,11 @@
                 <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
                 <Label fx:id="welcomeLabel" text="Welcome" styleClass="welcome-label"/>
                 <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="notificationsBtn" text="🔔 Notifications" onAction="#handleNotifications" styleClass="secondary-button"/>
+                <Button fx:id="usersBtn" text="👥 Users" onAction="#handleUsers" styleClass="secondary-button" managed="false" visible="false"/>
                 <Button fx:id="newRequestBtn" text="New Request" onAction="#handleNewRequest" styleClass="primary-button"/>
                 <Button fx:id="analyticsBtn" text="📊 Analytics" onAction="#handleAnalytics" styleClass="secondary-button" managed="false" visible="false"/>
                 <Button fx:id="exportBtn" text="Export" onAction="#handleExport" styleClass="secondary-button" managed="false" visible="false"/>
-                <Button fx:id="manageBtn" text="Manage Requests" onAction="#handleManage" styleClass="secondary-button" managed="false" visible="false"/>
                 <Button text="👤 Profile" onAction="#handleProfile" styleClass="secondary-button"/>
                 <Button text="🚪 Logout" onAction="#handleLogout" styleClass="danger-button"/>
             </HBox>
@@ -26,35 +28,46 @@
     </top>
     
     <center>
-        <VBox spacing="10">
-            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+        <VBox spacing="20">
+            <padding><Insets top="25" right="30" bottom="25" left="30"/></padding>
             
-            <HBox spacing="10">
-                <TextField fx:id="searchField" promptText="Search requests..." HBox.hgrow="ALWAYS"/>
-                <ComboBox fx:id="statusFilter" promptText="Filter by status"/>
+            <!-- Modern Search Bar Card -->
+            <HBox spacing="15" styleClass="search-card" alignment="CENTER_LEFT">
+                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
+                <Label text="🔍" style="-fx-font-size: 16px; -fx-text-fill: #95a5a6;"/>
+                <TextField fx:id="searchField" promptText="Search requests by ID, title, or requester..." HBox.hgrow="ALWAYS" styleClass="transparent-field"/>
+                <Separator orientation="VERTICAL"/>
+                <ComboBox fx:id="statusFilter" promptText="All Statuses" styleClass="transparent-combo"/>
             </HBox>
             
-            <TableView fx:id="requestTable" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="idColumn" text="Request ID" prefWidth="100"/>
-                    <TableColumn fx:id="titleColumn" text="Title" prefWidth="200"/>
-                    <TableColumn fx:id="categoryColumn" text="Category" prefWidth="150"/>
-                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="120"/>
-                    <TableColumn fx:id="priorityColumn" text="Priority" prefWidth="100"/>
-                    <TableColumn fx:id="createdColumn" text="Created" prefWidth="150"/>
-                </columns>
-            </TableView>
+            <!-- Table Card -->
+            <VBox styleClass="table-card" VBox.vgrow="ALWAYS">
+                <TableView fx:id="requestTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" prefWidth="100"/>
+                        <TableColumn fx:id="titleColumn" text="Title" prefWidth="250"/>
+                        <TableColumn fx:id="requesterColumn" text="Requester" prefWidth="150"/>
+                        <TableColumn fx:id="categoryColumn" text="Category" prefWidth="180"/>
+                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="120"/>
+                        <TableColumn fx:id="priorityColumn" text="Priority" prefWidth="100"/>
+                        <TableColumn fx:id="createdColumn" text="Date" prefWidth="150"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
             
-            <HBox spacing="10">
-                <Button text="View Details" onAction="#handleViewDetails" styleClass="secondary-button"/>
-                <Button fx:id="editBtn" text="Edit" onAction="#handleEdit" styleClass="secondary-button"/>
-                <Button fx:id="cancelRequestBtn" text="Cancel Request" onAction="#handleCancelRequest" styleClass="danger-button"/>
-                <Button fx:id="assignBtn" text="Assign to Me" onAction="#handleAssign" styleClass="primary-button" managed="false" visible="false"/>
-                <Button fx:id="acceptBtn" text="Accept" onAction="#handleAccept" styleClass="primary-button" managed="false" visible="false"/>
-                <Button fx:id="rejectBtn" text="Reject" onAction="#handleReject" styleClass="danger-button" managed="false" visible="false"/>
-                <Button fx:id="updateStatusBtn" text="Update Status" onAction="#handleUpdateStatus" styleClass="primary-button" managed="false" visible="false"/>
-                <Button fx:id="commentBtn" text="Add Comment" onAction="#handleComment" styleClass="secondary-button"/>
-                <Button fx:id="deleteBtn" text="Delete" onAction="#handleDelete" styleClass="danger-button" managed="false" visible="false"/>
+            <!-- Action Buttons -->
+            <HBox fx:id="actionButtonsContainer" spacing="15" alignment="CENTER_RIGHT">
+                <Button fx:id="editBtn" text="✏️ Edit" onAction="#handleEdit" styleClass="secondary-button"/>
+                <Button fx:id="cancelRequestBtn" text="🚫 Cancel" onAction="#handleCancelRequest" styleClass="danger-button"/>
+                <Button fx:id="assignBtn" text="🙋 Assign to Me" onAction="#handleAssign" styleClass="primary-button" managed="false" visible="false"/>
+                <Button fx:id="acceptBtn" text="✅ Accept" onAction="#handleAccept" styleClass="primary-button" managed="false" visible="false"/>
+                <Button fx:id="rejectBtn" text="❌ Reject" onAction="#handleReject" styleClass="danger-button" managed="false" visible="false"/>
+                <Button fx:id="updateStatusBtn" text="🔄 Update Status" onAction="#handleUpdateStatus" styleClass="primary-button" managed="false" visible="false"/>
+                <Button fx:id="chatBtn" text="💬 Chat" onAction="#handleChat" styleClass="secondary-button"/>
+                <Button fx:id="deleteBtn" text="🗑 Delete" onAction="#handleDelete" styleClass="danger-button" managed="false" visible="false"/>
             </HBox>
         </VBox>
     </center>

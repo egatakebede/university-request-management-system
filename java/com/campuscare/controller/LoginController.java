@@ -73,6 +73,8 @@ public class LoginController {
             passwordField.setVisible(false);
             passwordField.setManaged(false);
             togglePasswordBtn.setText("🔒");
+            passwordVisible.requestFocus();
+            passwordVisible.positionCaret(passwordVisible.getText().length());
         } else {
             passwordField.setText(passwordVisible.getText());
             passwordField.setVisible(true);
@@ -80,6 +82,8 @@ public class LoginController {
             passwordVisible.setVisible(false);
             passwordVisible.setManaged(false);
             togglePasswordBtn.setText("👁");
+            passwordField.requestFocus();
+            passwordField.positionCaret(passwordField.getText().length());
         }
     }
     
@@ -106,6 +110,13 @@ public class LoginController {
             
             stage.setTitle("Campath - Dashboard");
             stage.setScene(scene);
+            
+            javafx.geometry.Rectangle2D bounds = javafx.stage.Screen.getPrimary().getVisualBounds();
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+            stage.setMaximized(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -102,30 +102,127 @@
     -fx-border-color: #1E90FF;
 }
 
+.chart-card {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 20;
+    -fx-background-radius: 12;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);
+    -fx-min-width: 300;
+    -fx-alignment: center;
+}
+
 .dashboard-container {
     -fx-background-color: #F5F5F5;
 }
 
+/* Search Card Styling */
+.search-card {
+    -fx-background-color: white;
+    -fx-background-radius: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 3);
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 30;
+}
+
+.transparent-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+}
+.transparent-field:focused {
+    -fx-background-color: transparent;
+}
+
+.transparent-combo {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+}
+.transparent-combo:hover {
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 15;
+}
+
+/* Table Card Container */
+.table-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 3);
+    -fx-padding: 15;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 12;
+}
+
+/* Modern Table View Styling */
 .table-view {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 8;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 2);
+    -fx-background-color: transparent;
+    -fx-effect: null; /* Remove default shadow if any */
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2 0; /* Slightly thicker bottom border */
+    -fx-border-color: #F0F0F0;
 }
 
 .table-view .column-header {
-    -fx-background-color: #1E90FF;
-    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-size: 45px; /* Taller header */
+    -fx-border-width: 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #95a5a6;
     -fx-font-weight: bold;
-    -fx-padding: 10;
+    -fx-font-size: 11px;
+    -fx-alignment: center-left;
+    -fx-padding: 0 10 0 10; /* Add padding to header text */
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #F9F9F9;
+    -fx-cell-size: 50px; /* Taller rows for breathing room */
+}
+
+.table-cell {
+    -fx-padding: 0 10 0 10; /* Padding inside cells */
+    -fx-alignment: center-left;
+    -fx-text-fill: #2c3e50;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #E8F4FF;
-    -fx-text-fill: #1E90FF;
+    -fx-background-color: #F0F7FF;
+    -fx-background-insets: 0;
+    -fx-border-width: 0 0 1 3; /* Left border indicator */
+    -fx-border-color: transparent transparent #F0F0F0 #1E90FF;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: #1E90FF;
 }
 
 .table-row-cell:hover {
-    -fx-background-color: #F0F8FF;
+    -fx-background-color: #FAFAFA;
+}
+
+/* Scrollbar Styling */
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #E0E0E0;
+    -fx-background-radius: 5;
+}
+.table-view .scroll-bar:vertical .thumb:hover,
+.table-view .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #CCCCCC;
 }
 
 .text-field, .combo-box {
@@ -245,7 +342,7 @@
 }
 
 .primary-button {
-    -fx-background-color: #1E90FF;
+    -fx-background-color: #0056b3;
     -fx-text-fill: white;
     -fx-padding: 10 20;
     -fx-background-radius: 8;
@@ -255,7 +352,7 @@
 }
 
 .primary-button:hover {
-    -fx-background-color: #1873CC;
+    -fx-background-color: #004494;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 6, 0, 0, 3);
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
@@ -307,4 +404,39 @@
 
 .small-button:hover {
     -fx-background-color: linear-gradient(to bottom, #e9ecef, #dee2e6);
+}
+
+/* Chat Styles */
+.chat-list {
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 8;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 8;
+}
+
+.chat-bubble-self {
+    -fx-background-color: #DCF8C6; /* WhatsApp-like green */
+    -fx-background-radius: 15 15 0 15;
+    -fx-padding: 10;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 0, 1);
+}
+
+.chat-bubble-other {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 15 15 15 0;
+    -fx-padding: 10;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 0, 1);
+}
+
+/* Active Notification Badge Style */
+.notification-active {
+    -fx-background-color: #FF4444;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255, 68, 68, 0.4), 10, 0, 0, 0);
+}
+.notification-active:hover {
+    -fx-background-color: #CC0000;
 }

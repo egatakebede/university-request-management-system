@@ -26,19 +26,6 @@
     "completedAt": ""
   },
   {
-    "requestId": "REQDF76B1BD",
-    "title": "hello i am",
-    "category": "ACADEMIC_ADVISING",
-    "status": "PENDING",
-    "priority": "URGENT",
-    "description": "gggggggggg",
-    "requesterId": "1893/16",
-    "departmentId": "Library Services",
-    "createdAt": "2025-12-10T16:42:32.776716500",
-    "assignedTo": "",
-    "completedAt": ""
-  },
-  {
     "requestId": "REQC7C5872C",
     "title": "xxx",
     "category": "FACILITIES_MAINTENANCE",
@@ -68,7 +55,7 @@
     "requestId": "REQEB0489D3",
     "title": "asdfghjk",
     "category": "IT_SUPPORT",
-    "status": "CANCELLED",
+    "status": "WAITING_FOR_USER",
     "priority": "URGENT",
     "description": "hjkjl;l",
     "requesterId": "1892/16",
@@ -94,7 +81,7 @@
     "requestId": "REQ8D4CD8D8",
     "title": "ghj",
     "category": "FACILITIES_MAINTENANCE",
-    "status": "PENDING",
+    "status": "CANCELLED",
     "priority": "MEDIUM",
     "description": "gjjk",
     "requesterId": "1892/16",
@@ -140,6 +127,58 @@
     "departmentId": "IT Support",
     "createdAt": "2025-12-11T09:10:04.534365600",
     "assignedTo": "",
+    "completedAt": ""
+  },
+  {
+    "requestId": "REQC948808C",
+    "title": "zs",
+    "category": "ACADEMIC_ADVISING",
+    "status": "PENDING",
+    "priority": "MEDIUM",
+    "description": "zs",
+    "requesterId": "ADMIN001",
+    "departmentId": "Academic Advising",
+    "createdAt": "2025-12-25T13:59:44.150422200",
+    "assignedTo": "",
+    "completedAt": ""
+  },
+  {
+    "requestId": "REQFC14942A",
+    "title": "xb",
+    "category": "IT_SUPPORT",
+    "status": "REJECTED",
+    "priority": "URGENT",
+    "description": "sas",
+    "requesterId": "1892/16",
+    "departmentId": "IT Support",
+    "createdAt": "2025-12-25T14:12:10.473772300",
+    "assignedTo": "",
+    "completedAt": ""
+  },
+  {
+    "requestId": "CHAT-6d9db68d",
+    "title": "Direct Chat",
+    "category": "ADMINISTRATIVE_ASSISTANCE",
+    "status": "IN_PROGRESS",
+    "priority": "MEDIUM",
+    "description": "Direct chat between Admin and 1892/16",
+    "requesterId": "1892/16",
+    "departmentId": "Administration",
+    "createdAt": "2025-12-25T15:02:18.474873",
+    "assignedTo": "admin",
+    "completedAt": ""
+  },
+  {
+    "requestId": "CHAT-9ff304b9",
+    "title": "Direct Chat",
+    "category": "ADMINISTRATIVE_ASSISTANCE",
+    "status": "IN_PROGRESS",
+    "priority": "MEDIUM",
+    "description": "Direct chat between Admin and itstaff",
+    "requesterId": "DEPT-IT001",
+    "departmentId": "Administration",
+    "createdAt": "2025-12-25T15:02:27.858516100",
+    "assignedTo": "admin",
     "completedAt": ""
   }
 ]

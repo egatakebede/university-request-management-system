@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -50,13 +51,14 @@ public class ProfileController {
         idLabel.setText(currentUser.getUserId());
         usernameLabel.setText(currentUser.getUsername());
         emailField.setText(currentUser.getEmail());
+        phoneField.setText(currentUser.getPhone() != null ? currentUser.getPhone() : "");
         roleLabel.setText(getRoleDisplayName(currentUser.getRole().toString()));
         departmentLabel.setText(currentUser.getDepartment());
         joinDateLabel.setText("Member since 2024");
         lastLoginLabel.setText("Last login: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm")));
         
-        // Load default avatar
-        loadDefaultAvatar();
+        // Load avatar
+        loadAvatar();
         
         // Setup password visibility toggle
         setupPasswordToggle();
@@ -73,14 +75,36 @@ public class ProfileController {
         };
     }
     
-    private void loadDefaultAvatar() {
-        String avatarPath = "/com/campuscare/images/default-avatar.png";
+    private void loadAvatar() {
+        // Set circular clip
+        Circle clip = new Circle(40, 40, 40);
+        avatarImage.setClip(clip);
+        
         try {
-            Image avatar = new Image(getClass().getResourceAsStream(avatarPath));
-            avatarImage.setImage(avatar);
+            if (currentUser.getAvatarPath() != null && !currentUser.getAvatarPath().isEmpty()) {
+                File file = new File(currentUser.getAvatarPath());
+                if (file.exists()) {
+                    avatarImage.setImage(new Image(file.toURI().toString()));
+                } else {
+                    loadDefaultImage();
+                }
+            } else {
+                loadDefaultImage();
+            }
         } catch (Exception e) {
-            // Create a simple colored circle as fallback
-            avatarImage.setStyle("-fx-background-color: #4A90E2; -fx-background-radius: 50;");
+            loadDefaultImage();
+        }
+    }
+    
+    private void loadDefaultImage() {
+        // Fallback to a colored placeholder or default resource if available
+        // Since we don't have a guaranteed default image resource, we'll rely on the ImageView's background style or set a null image
+        // But ImageView background style doesn't show if image is null.
+        // Let's try to load a default if it exists, otherwise just leave it empty/styled.
+        try {
+            avatarImage.setImage(new Image(getClass().getResourceAsStream("/com/campuscare/images/default-avatar.png")));
+        } catch (Exception e) {
+            // If default image missing, maybe set a generated one or just keep empty
         }
     }
     
@@ -91,13 +115,22 @@ public class ProfileController {
         showPasswordCheck.setOnAction(e -> {
             boolean show = showPasswordCheck.isSelected();
             newPasswordField.setVisible(!show);
+            newPasswordField.setManaged(!show);
             confirmPasswordField.setVisible(!show);
+            confirmPasswordField.setManaged(!show);
             newPasswordVisible.setVisible(show);
+            newPasswordVisible.setManaged(show);
             confirmPasswordVisible.setVisible(show);
+            confirmPasswordVisible.setManaged(show);
             
             if (show) {
                 newPasswordVisible.setText(newPasswordField.getText());
                 confirmPasswordVisible.setText(confirmPasswordField.getText());
+
+                newPasswordField.setVisible(false);
+                newPasswordField.setManaged(false);
+                confirmPasswordField.setVisible(false);
+                confirmPasswordField.setManaged(false);
             } else {
                 newPasswordField.setText(newPasswordVisible.getText());
                 confirmPasswordField.setText(confirmPasswordVisible.getText());
@@ -159,6 +192,8 @@ public class ProfileController {
         
         // Update user data
         currentUser.setEmail(email);
+        currentUser.setPhone(phone);
+        dataService.saveUsers();
         
         showMessage("✅ Profile updated successfully!", "success");
     }
@@ -204,6 +239,7 @@ public class ProfileController {
         }
         
         currentUser.setPassword(newPass);
+        dataService.saveUsers();
         clearPasswordFields();
         
         showMessage("✅ Password changed successfully!", "success");
@@ -243,6 +279,8 @@ public class ProfileController {
             try {
                 Image newAvatar = new Image(file.toURI().toString());
                 avatarImage.setImage(newAvatar);
+                currentUser.setAvatarPath(file.getAbsolutePath());
+                dataService.saveUsers();
                 showMessage("✅ Profile picture updated!", "success");
             } catch (Exception e) {
                 showMessage("Failed to load image", "error");

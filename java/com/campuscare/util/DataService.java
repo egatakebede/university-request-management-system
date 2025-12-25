@@ -3,6 +3,7 @@ package com.campuscare.util;
 import com.campuscare.model.User;
 import com.campuscare.model.UserRole;
 import com.campuscare.model.ServiceRequest;
+import com.campuscare.model.Notification;
 import com.campuscare.model.RequestCategory;
 import com.campuscare.model.RequestStatus;
 import com.campuscare.model.Priority;
@@ -14,9 +15,11 @@ import java.time.LocalDateTime;
 public class DataService {
     private static final String USERS_FILE = "data/users.json";
     private static final String REQUESTS_FILE = "data/requests.json";
+    private static final String NOTIFICATIONS_FILE = "data/notifications.json";
     
     private List<User> users;
     private List<ServiceRequest> requests;
+    private List<Notification> notifications;
     
     public DataService() {
         loadData();
@@ -30,6 +33,7 @@ public class DataService {
     private void loadData() {
         users = loadUsers();
         requests = loadRequests();
+        notifications = loadNotifications();
         
         if (users.isEmpty()) {
             initializeDefaultUsers();
@@ -70,6 +74,23 @@ public class DataService {
         }
     }
     
+    private List<Notification> loadNotifications() {
+        try {
+            File file = new File(NOTIFICATIONS_FILE);
+            if (!file.exists()) return new ArrayList<>();
+            
+            StringBuilder json = new StringBuilder();
+            try (java.util.Scanner scanner = new java.util.Scanner(file)) {
+                while (scanner.hasNextLine()) {
+                    json.append(scanner.nextLine());
+                }
+            }
+            return parseNotificationsFromJson(json.toString());
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+    
     public void saveUsers() {
         new File("data").mkdirs();
         try (PrintWriter writer = new PrintWriter(new FileWriter(USERS_FILE))) {
@@ -83,6 +104,15 @@ public class DataService {
         new File("data").mkdirs();
         try (PrintWriter writer = new PrintWriter(new FileWriter(REQUESTS_FILE))) {
             writer.println(requestsToJson());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void saveNotifications() {
+        new File("data").mkdirs();
+        try (PrintWriter writer = new PrintWriter(new FileWriter(NOTIFICATIONS_FILE))) {
+            writer.println(notificationsToJson());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -128,6 +158,10 @@ public class DataService {
     
     public List<ServiceRequest> getAllRequests() {
         return new ArrayList<>(requests);
+    }
+    
+    public List<User> getAllUsers() {
+        return new ArrayList<>(users);
     }
     
     public List<ServiceRequest> getRequestsByUser(String userId) {
@@ -178,6 +212,46 @@ public class DataService {
         }
     }
     
+    // --- Notification Methods ---
+    
+    public void sendNotification(String senderId, String recipientId, String message) {
+        notifications.add(new Notification(senderId, recipientId, message));
+        saveNotifications();
+    }
+    
+    public void notifyDepartment(String senderId, String department, String message) {
+        List<User> staff = users.stream()
+            .filter(u -> u.getDepartment().equals(department) && u.getRole() == UserRole.DEPARTMENT_STAFF)
+            .collect(Collectors.toList());
+            
+        for (User u : staff) {
+            sendNotification(senderId, u.getUserId(), message);
+        }
+    }
+    
+    public List<Notification> getUserNotifications(String userId) {
+        return notifications.stream()
+            .filter(n -> n.getRecipientId().equals(userId))
+            .sorted((n1, n2) -> n2.getTimestamp().compareTo(n1.getTimestamp()))
+            .collect(Collectors.toList());
+    }
+    
+    public void markNotificationAsRead(String notificationId) {
+        notifications.stream()
+            .filter(n -> n.getId().equals(notificationId))
+            .findFirst()
+            .ifPresent(n -> n.setRead(true));
+        saveNotifications();
+    }
+    
+    public void markNotificationAsUnread(String notificationId) {
+        notifications.stream()
+            .filter(n -> n.getId().equals(notificationId))
+            .findFirst()
+            .ifPresent(n -> n.setRead(false));
+        saveNotifications();
+    }
+    
     private String usersToJson() {
         StringBuilder json = new StringBuilder("[\n");
         for (int i = 0; i < users.size(); i++) {
@@ -188,7 +262,9 @@ public class DataService {
             json.append("    \"password\": \"").append(u.getPassword()).append("\",\n");
             json.append("    \"email\": \"").append(u.getEmail()).append("\",\n");
             json.append("    \"role\": \"").append(u.getRole()).append("\",\n");
-            json.append("    \"department\": \"").append(u.getDepartment()).append("\"\n");
+            json.append("    \"department\": \"").append(u.getDepartment()).append("\",\n");
+            json.append("    \"phone\": \"").append(u.getPhone() != null ? u.getPhone() : "").append("\",\n");
+            json.append("    \"avatarPath\": \"").append(u.getAvatarPath() != null ? u.getAvatarPath().replace("\\", "\\\\") : "").append("\"\n");
             json.append("  }").append(i < users.size() - 1 ? "," : "").append("\n");
         }
         json.append("]");
@@ -217,6 +293,23 @@ public class DataService {
         return json.toString();
     }
     
+    private String notificationsToJson() {
+        StringBuilder json = new StringBuilder("[\n");
+        for (int i = 0; i < notifications.size(); i++) {
+            Notification n = notifications.get(i);
+            json.append("  {\n");
+            json.append("    \"id\": \"").append(n.getId()).append("\",\n");
+            json.append("    \"senderId\": \"").append(n.getSenderId()).append("\",\n");
+            json.append("    \"recipientId\": \"").append(n.getRecipientId()).append("\",\n");
+            json.append("    \"message\": \"").append(n.getMessage()).append("\",\n");
+            json.append("    \"isRead\": \"").append(n.isRead()).append("\",\n");
+            json.append("    \"timestamp\": \"").append(n.getTimestamp()).append("\"\n");
+            json.append("  }").append(i < notifications.size() - 1 ? "," : "").append("\n");
+        }
+        json.append("]");
+        return json.toString();
+    }
+    
     private List<User> parseUsersFromJson(String json) {
         List<User> userList = new ArrayList<>();
         // Simple JSON parsing for users
@@ -229,9 +322,14 @@ public class DataService {
                 String email = extractValue(block, "email");
                 String roleStr = extractValue(block, "role");
                 String department = extractValue(block, "department");
+                String phone = extractValue(block, "phone");
+                String avatarPath = extractValue(block, "avatarPath");
                 
                 UserRole role = UserRole.valueOf(roleStr);
-                userList.add(new User(userId, username, password, email, role, department));
+                User u = new User(userId, username, password, email, role, department);
+                u.setPhone(phone);
+                u.setAvatarPath(avatarPath);
+                userList.add(u);
             }
         }
         return userList;
@@ -261,6 +359,25 @@ public class DataService {
             }
         }
         return requestList;
+    }
+    
+    private List<Notification> parseNotificationsFromJson(String json) {
+        List<Notification> list = new ArrayList<>();
+        String[] blocks = json.split("\\},");
+        for (String block : blocks) {
+            if (block.contains("recipientId")) {
+                String id = extractValue(block, "id");
+                String senderId = extractValue(block, "senderId");
+                String recipientId = extractValue(block, "recipientId");
+                String message = extractValue(block, "message");
+                String isReadStr = extractValue(block, "isRead");
+                String timestamp = extractValue(block, "timestamp");
+                
+                boolean isRead = Boolean.parseBoolean(isReadStr);
+                list.add(new Notification(id, senderId, recipientId, message, isRead, timestamp));
+            }
+        }
+        return list;
     }
     
     private String extractValue(String json, String key) {

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "f0b35db1-be94-4003-97ad-09a70a190640",
+    "senderId": "",
+    "recipientId": "1892/16",
+    "message": "Request REQEB0489D3 status updated to WAITING_FOR_USER",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:04:16.552262900"
+  },
+  {
+    "id": "f43c37af-cebd-480b-bbe2-8e537ed67892",
+    "senderId": "1892/16",
+    "recipientId": "DEPT-IT001",
+    "message": "New Request: xb",
+    "isRead": "false",
+    "timestamp": "2025-12-25T14:12:10.476312200"
+  },
+  {
+    "id": "78234a51-db5d-4693-8049-7b0a1c79ecd6",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on REQ0D950D62: h",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:37:44.911834800"
+  },
+  {
+    "id": "e924b5b5-645b-43bc-a8bb-9ba0b92849d0",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on REQFC14942A: the isue has solved thankyou",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:38:13.054957500"
+  },
+  {
+    "id": "2049ef44-6a0d-4cb3-9026-c08fd77dcbab",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on REQEB0489D3: hello",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:40:34.738428200"
+  },
+  {
+    "id": "27ee2dbd-4ebb-42c6-9ad3-5ed79179f06a",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on REQEB0489D3: jnkn",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:44:24.299021300"
+  },
+  {
+    "id": "334ccdb3-f012-4f29-b166-192ead7e19fa",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on REQ6BD9152F: dndn",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:47:25.038903300"
+  },
+  {
+    "id": "f4ace4a8-6991-48e0-982c-bbd925a71047",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on REQ6BD9152F: jqknx",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:47:38.376565900"
+  },
+  {
+    "id": "57701e40-4300-413c-b4b8-f2df90a18e49",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on REQ6BD9152F: wrstdyuiop",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:55:58.708262"
+  },
+  {
+    "id": "f0e3026e-4bd4-430a-b050-f733684fd033",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on REQ238C2995: sdtrgyuio",
+    "isRead": "true",
+    "timestamp": "2025-12-25T14:56:28.301582900"
+  },
+  {
+    "id": "6a3894c9-10ae-4734-99f9-7e568a32065d",
+    "senderId": "admin",
+    "recipientId": "1892/16",
+    "message": "New message on CHAT-6d9db68d: hxczxcv",
+    "isRead": "false",
+    "timestamp": "2025-12-25T15:03:16.431493900"
+  }
+]

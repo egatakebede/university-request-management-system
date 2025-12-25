@@ -103,6 +103,10 @@ public class NewRequestController {
         }
         
         dataService.addRequest(request);
+        
+        // Notify department staff
+        dataService.notifyDepartment(currentUser.getUsername(), departmentCombo.getValue(), "New Request: " + titleField.getText());
+        
         dashboardController.refresh();
         
         Stage stage = (Stage) titleField.getScene().getWindow();

@@ -77,7 +77,7 @@
                         <VBox spacing="5">
                             <Label text="New Password:" style="-fx-font-weight: bold;"/>
                             <PasswordField fx:id="newPasswordField" promptText="Enter new password (min 8 characters)"/>
-                            <TextField fx:id="newPasswordVisible" promptText="Enter new password (min 8 characters)" visible="false"/>
+                            <TextField fx:id="newPasswordVisible" promptText="Enter new password (min 8 characters)" visible="false" managed="false"/>
                             <HBox spacing="10" alignment="CENTER_LEFT">
                                 <ProgressBar fx:id="passwordStrength" prefWidth="150" prefHeight="8"/>
                                 <Label fx:id="strengthLabel" text="" style="-fx-font-size: 12px;"/>
@@ -87,7 +87,7 @@
                         <VBox spacing="5">
                             <Label text="Confirm Password:" style="-fx-font-weight: bold;"/>
                             <PasswordField fx:id="confirmPasswordField" promptText="Confirm new password"/>
-                            <TextField fx:id="confirmPasswordVisible" promptText="Confirm new password" visible="false"/>
+                            <TextField fx:id="confirmPasswordVisible" promptText="Confirm new password" visible="false" managed="false"/>
                         </VBox>
                         
                         <CheckBox fx:id="showPasswordCheck" text="👁️ Show passwords"/>

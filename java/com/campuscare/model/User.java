@@ -11,6 +11,8 @@ public class User implements Serializable {
     private String email;
     private UserRole role;
     private String department;
+    private String phone;
+    private String avatarPath;
 
     public User(String userId, String username, String password, String email, UserRole role, String department) {
         this.userId = userId;
@@ -27,6 +29,12 @@ public class User implements Serializable {
     public String getEmail() { return email; }
     public UserRole getRole() { return role; }
     public String getDepartment() { return department; }
+    
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    
+    public String getAvatarPath() { return avatarPath; }
+    public void setAvatarPath(String avatarPath) { this.avatarPath = avatarPath; }
     
     public void setPassword(String password) { this.password = password; }
     public void setEmail(String email) { this.email = email; }
