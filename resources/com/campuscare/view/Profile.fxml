@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.campuscare.controller.ProfileController"
+            styleClass="dashboard-container"
+            prefWidth="1200" prefHeight="700">
+    
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header">
+            <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+            <Label text="👤 My Profile" styleClass="welcome-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🏠 Dashboard" onAction="#handleBack" styleClass="secondary-button"/>
+        </HBox>
+    </top>
+    
+    <center>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="20" alignment="TOP_CENTER">
+                <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+                
+                <!-- Profile Header Card -->
+                <VBox spacing="20" maxWidth="600" styleClass="stat-card">
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <VBox alignment="CENTER" spacing="10">
+                            <ImageView fx:id="avatarImage" fitWidth="80" fitHeight="80" preserveRatio="true" 
+                                     style="-fx-background-radius: 40; -fx-border-radius: 40; -fx-border-color: #ddd; -fx-border-width: 2;"/>
+                            <Button text="📷 Change" onAction="#handleChangeAvatar" styleClass="small-button"/>
+                        </VBox>
+                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                            <Label fx:id="usernameLabel" text="" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                            <Label fx:id="roleLabel" text="" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+                            <Label fx:id="departmentLabel" text="" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+                            <HBox spacing="15">
+                                <Label fx:id="joinDateLabel" text="" style="-fx-font-size: 12px; -fx-text-fill: #999;"/>
+                                <Label fx:id="lastLoginLabel" text="" style="-fx-font-size: 12px; -fx-text-fill: #999;"/>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+                
+                <!-- Profile Information Card -->
+                <VBox spacing="20" maxWidth="600" styleClass="stat-card">
+                    <Label text="📋 Profile Information" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    
+                    <GridPane hgap="15" vgap="15">
+                        <Label text="User ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="idLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-text-fill: #666;"/>
+                        
+                        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Enter your email"/>
+                        
+                        <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Enter phone number (optional)"/>
+                    </GridPane>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Button text="💾 Update Profile" onAction="#handleUpdateProfile" styleClass="primary-button"/>
+                    </HBox>
+                </VBox>
+                    
+                <!-- Security Card -->
+                <VBox spacing="20" maxWidth="600" styleClass="stat-card">
+                    <Label text="🔒 Security Settings" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    
+                    <VBox spacing="15">
+                        <VBox spacing="5">
+                            <Label text="Current Password:" style="-fx-font-weight: bold;"/>
+                            <PasswordField fx:id="currentPasswordField" promptText="Enter current password"/>
+                        </VBox>
+                        
+                        <VBox spacing="5">
+                            <Label text="New Password:" style="-fx-font-weight: bold;"/>
+                            <PasswordField fx:id="newPasswordField" promptText="Enter new password (min 8 characters)"/>
+                            <TextField fx:id="newPasswordVisible" promptText="Enter new password (min 8 characters)" visible="false"/>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <ProgressBar fx:id="passwordStrength" prefWidth="150" prefHeight="8"/>
+                                <Label fx:id="strengthLabel" text="" style="-fx-font-size: 12px;"/>
+                            </HBox>
+                        </VBox>
+                        
+                        <VBox spacing="5">
+                            <Label text="Confirm Password:" style="-fx-font-weight: bold;"/>
+                            <PasswordField fx:id="confirmPasswordField" promptText="Confirm new password"/>
+                            <TextField fx:id="confirmPasswordVisible" promptText="Confirm new password" visible="false"/>
+                        </VBox>
+                        
+                        <CheckBox fx:id="showPasswordCheck" text="👁️ Show passwords"/>
+                        
+                        <Label fx:id="messageLabel" wrapText="true" style="-fx-font-size: 14px;"/>
+                    </VBox>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Button text="🔑 Change Password" onAction="#handleChangePassword" styleClass="primary-button"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

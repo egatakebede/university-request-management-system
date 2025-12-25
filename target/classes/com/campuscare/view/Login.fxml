@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.campuscare.controller.LoginController"
+            styleClass="login-container"
+            prefWidth="1000" prefHeight="700">
+    
+    <center>
+        <VBox alignment="CENTER" spacing="30">
+            <padding>
+                <Insets top="50" right="50" bottom="50" left="50"/>
+            </padding>
+            
+            <!-- Header Section -->
+            <VBox alignment="CENTER" spacing="10">
+                <Text text="🎓 Campath" styleClass="title" style="-fx-font-size: 36px;"/>
+<!--                <Text text="Campus Service Request Management" styleClass="subtitle" style="-fx-font-size: 16px;"/>-->
+            </VBox>
+            
+            <!-- Login Form -->
+            <VBox spacing="20" maxWidth="400" styleClass="login-form-card">
+                <VBox spacing="8">
+                    <Label text="User ID" styleClass="form-label"/>
+                    <TextField fx:id="usernameField" promptText="Enter your user ID" styleClass="form-field" onAction="#handleLogin"/>
+                </VBox>
+                
+                <VBox spacing="8">
+                    <Label text="Password" styleClass="form-label"/>
+                    <HBox spacing="0" alignment="CENTER_LEFT">
+                        <TextField fx:id="passwordVisible" promptText="Enter your password" styleClass="form-field" managed="false" visible="false" HBox.hgrow="ALWAYS" onAction="#handleLogin"/>
+                        <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="form-field" HBox.hgrow="ALWAYS" onAction="#handleLogin"/>
+                        <Button fx:id="togglePasswordBtn" text="👁" onAction="#togglePassword" styleClass="toggle-btn"/>
+                    </HBox>
+                </VBox>
+                
+                <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" managed="false" visible="false"/>
+                
+                <Button text="🔐 Sign In" onAction="#handleLogin" styleClass="primary-button" maxWidth="Infinity" defaultButton="true" prefHeight="45"/>
+                
+                <Separator style="-fx-opacity: 0.3;"/>
+                
+                <HBox alignment="CENTER" spacing="15">
+                    <Label text="Need help?" styleClass="link-label" onMouseClicked="#handleForgotPassword"/>
+                    <Label text="•" style="-fx-text-fill: #ccc;"/>
+                    <Label text="Contact Support" styleClass="link-label"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

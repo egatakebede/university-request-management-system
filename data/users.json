@@ -1,0 +1,58 @@
+[
+  {
+    "userId": "ADMIN001",
+    "username": "admin",
+    "password": "admin123",
+    "email": "admin@campus.edu",
+    "role": "ADMIN",
+    "department": "Administration"
+  },
+  {
+    "userId": "1892/16",
+    "username": "1892/16",
+    "password": "pass123",
+    "email": "student1892@campus.edu",
+    "role": "STUDENT",
+    "department": "Computer Science"
+  },
+  {
+    "userId": "1893/16",
+    "username": "1893/16",
+    "password": "pass123",
+    "email": "student1893@campus.edu",
+    "role": "STUDENT",
+    "department": "Engineering"
+  },
+  {
+    "userId": "LECT001",
+    "username": "lecturer1",
+    "password": "pass123",
+    "email": "lecturer1@campus.edu",
+    "role": "LECTURER",
+    "department": "Engineering"
+  },
+  {
+    "userId": "STAFF001",
+    "username": "staff1",
+    "password": "pass123",
+    "email": "staff1@campus.edu",
+    "role": "STAFF",
+    "department": "Finance"
+  },
+  {
+    "userId": "DEPT-IT001",
+    "username": "itstaff",
+    "password": "pass123",
+    "email": "itstaff@campus.edu",
+    "role": "DEPARTMENT_STAFF",
+    "department": "IT Support"
+  },
+  {
+    "userId": "DEPT-FAC001",
+    "username": "facilitystaff",
+    "password": "pass123",
+    "email": "facilitystaff@campus.edu",
+    "role": "DEPARTMENT_STAFF",
+    "department": "Facilities Maintenance"
+  }
+]
